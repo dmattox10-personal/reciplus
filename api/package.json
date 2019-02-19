@@ -1,0 +1,28 @@
+{
+  "name": "api",
+  "version": "0.1.0-alpha",
+  "description": "API server for Reciplus",
+  "main": "server.js",
+  "author": "Daniel Mattox <dmattox10@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-fileupload": "^1.1.1-alpha.3",
+    "express-promise": "^0.4.0",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "jimp": "^0.6.0",
+    "jsonwebtoken": "^8.4.0",
+    "mongonaut": "^3.0.0",
+    "mongoose": "^5.4.13",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  }
+}
