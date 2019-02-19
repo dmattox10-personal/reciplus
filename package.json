@@ -1,0 +1,34 @@
+{
+  "name": "reciplus",
+  "version": "0.1.0-alpha",
+  "description": "SaaS platform for recipe, ingredient, and allergen management builf on react, express",
+  "main": "index.js",
+  "repository": "https://github.com/dmattox10/reciplus.git",
+  "author": "Daniel Mattox <dmattox10@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "bootstrap": "^4.3.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "jquery": "1.9.1",
+    "popper.js": "^1.14.7",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.2",
+    "react-bootstrap": "^1.0.0-beta.5",
+    "react-dom": "^16.8.2",
+    "webpack": "^4.29.4",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {}
+}
