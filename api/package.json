@@ -18,11 +18,11 @@
     "express-validator": "^5.3.1",
     "jimp": "^0.6.0",
     "jsonwebtoken": "^8.4.0",
-    "mongonaut": "^3.0.0",
-    "mongoose": "^5.4.13",
+    "mongoose": "^5.4.14",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
     "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }

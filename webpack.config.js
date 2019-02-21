@@ -1,6 +1,15 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+    entry: './src/js/index.js',
+    output: {
+        path: __dirname + '/dist',
+        publicPath: '/',
+        filename: 'bundle.js'
+    },
+    devServer: {
+        contentBase: './dist'
+    },
     module: {
         rules: [
             {
@@ -38,7 +47,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/index.html",
+            template: "./dist/index.html",
             filename: "./index.html"
         })
     ]
