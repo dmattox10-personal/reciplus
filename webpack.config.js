@@ -38,11 +38,23 @@ module.exports = {
                     }
                   }
                 ]
-              },
-              {
+            },
+
+            {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: ["file-loader"]
-        }
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    }
+                ]
+            }
         ]
     },
     plugins: [
