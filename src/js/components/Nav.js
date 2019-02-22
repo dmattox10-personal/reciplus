@@ -1,31 +1,44 @@
 import React from 'react'
 import NavItems from './NavItems'
-
+import Toolbar from './Toolbar'
+import Drawer from './Drawer'
 
 
 class Nav extends React.Component {
+
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-          Toggled: false
-        };
+            DrawerOpen: false,
+        }
     }
-    Toggle(e) {
-        e.preventDefault();
-        this.setState(prevState => ({
-          Toggled: !prevState.Toggled
-        }));
+    
+
+    drawerToggleClickHandler = () => {
+        this.setState(prevState => {
+          return { DrawerOpen: !prevState.DrawerOpen }
+        })
     }
+    
+      backgroundClickHandler = () => {
+        this.setState({ DrawerOpen: false })
+    }
+
     render() {
-        const classToggler = 'navbar-toggler' + (this.state.isToggleOn ? ' show' : '')
+        let Drawer
+
+        if (this.state.DrawerOpen) {
+            Drawer = <Drawer />
+        }
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/">Navbar</a>
-        <button className="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" onClick={(e) => {this.Toggle(e)}}>
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <NavItems />
-        </nav>
+        <div style={{ height: '100%' }}>
+            <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
+            {Drawer}
+            <NavItems />
+            <main style={{ marginTop: '64px' }}>
+            
+            </main>
+            </div>
         )
     }
 }

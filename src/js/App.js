@@ -5,7 +5,10 @@ import '../css/App.css'
 //import { Navbar, Button } from 'react-bootstrap'
 import LogIn from './components/LogIn'
 import Nav from './components/Nav'
-//import style from '../scss/app.scss';
+import NavItems from './components/NavItems'
+import Toolbar from './components/Toolbar'
+import Drawer from './components/Drawer'
+import '../css/ES.css'
 
 var LoggedIn = true;
 
@@ -34,31 +37,48 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      navCollapsed: true
+        DrawerOpen: false,
     }
   }
-    render() {
-      const {navCollapsed} = this.state
-        return (
-          <div>
-            <Nav />
-          <div className="container">
-            
-            <ul>
-            <li><Link to="/">Recipes</Link></li>
-            <li><Link to="/Dashboard">Dashboard</Link></li>
-            <li><Link to="/LogIn">LogIn</Link></li>
-            <li><Link to="/LogOut">Log Out</Link></li>
-            </ul>
 
-            <Route path="/" component={Recipes}/>
-            <Route path="/Dashboard" component={Dashboard}/>
-            <Route path="/LogIn" component={LogIn}/>
-            <Route path="/LogOut" component={LogOut}/>
-          </div> 
-          </div>       
-        )
+  drawerToggleClickHandler = () => {
+    this.setState(prevState => {
+      return { DrawerOpen: !prevState.DrawerOpen }
+    })
+  }
+
+  backgroundClickHandler = () => {
+    this.setState({ DrawerOpen: false })
+  }
+  render() {
+    let Drawer
+
+    if (this.state.DrawerOpen) {
+      Drawer = <Drawer />
     }
+
+    return (
+      <div>
+        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
+            {Drawer}
+            <NavItems />
+      <div className="container">
+        
+        <ul>
+        <li><Link to="/">Recipes</Link></li>
+        <li><Link to="/Dashboard">Dashboard</Link></li>
+        <li><Link to="/LogIn">LogIn</Link></li>
+        <li><Link to="/LogOut">Log Out</Link></li>
+        </ul>
+
+        <Route path="/" component={Recipes}/>
+        <Route path="/Dashboard" component={Dashboard}/>
+        <Route path="/LogIn" component={LogIn}/>
+        <Route path="/LogOut" component={LogOut}/>
+      </div> 
+      </div>       
+    )
+  }
 }
 
 export default App
