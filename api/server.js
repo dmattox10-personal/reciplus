@@ -16,13 +16,19 @@ require('./config/passport');
 
 app.use( bodyParser.urlencoded({ extended : false }) );
 
-const routes = require('./routes/user');
+const routes = require('./routes/user')
+const tests = require('./routes/tests')
 const secureRoute = require('./routes/dashboard'); // Our secure route
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use('/', routes);
+app.use('/api/tests/', tests)
 //We plugin our jwt strategy as a middleware so only verified users can access this route
 app.use('/user', passport.authenticate('jwt', { session : false }), secureRoute );
-
+app.use
 //Handle errors
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
