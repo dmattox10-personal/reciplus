@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const app = express();
 const UserModel = require('./models/user');
@@ -15,7 +16,7 @@ mongoose.Promise = global.Promise;
 require('./config/passport');
 
 app.use( bodyParser.urlencoded({ extended : false }) );
-
+app.use( cookieParser())
 const routes = require('./routes/user')
 const tests = require('./routes/tests')
 const secureRoute = require('./routes/dashboard'); // Our secure route
@@ -27,8 +28,8 @@ app.use(function(req, res, next) {
 app.use('/', routes);
 app.use('/api/tests/', tests)
 //We plugin our jwt strategy as a middleware so only verified users can access this route
-app.use('/user', passport.authenticate('jwt', { session : false }), secureRoute );
-app.use
+//app.use('/user', passport.authenticate('jwt', { session : true }), secureRoute );
+app.use('/user', secureRoute)
 //Handle errors
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
