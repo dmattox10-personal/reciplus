@@ -1,7 +1,7 @@
 {
   "name": "reciplus",
   "version": "0.1.0-alpha",
-  "description": "SaaS platform for recipe, ingredient, and allergen management builf on react, express",
+  "description": "SaaS platform for recipe, ingredient, and allergen management built on react, express",
   "main": "index.js",
   "repository": "https://github.com/dmattox10/reciplus.git",
   "author": "Daniel Mattox <dmattox10@gmail.com>",

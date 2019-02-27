@@ -3,6 +3,9 @@
   "version": "0.1.0-alpha",
   "description": "API server for Reciplus",
   "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "author": "Daniel Mattox <dmattox10@gmail.com>",
   "license": "MIT",
   "dependencies": {

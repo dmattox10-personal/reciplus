@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../css/ES.css'
-
 const NavItem = props => {
   const pageURI = window.location.pathname+window.location.search
   const liClassName = (props.path === pageURI) ? "nav-item active" : "nav-item";
@@ -15,7 +14,6 @@ const NavItem = props => {
   );
 }
 
-{/*
 const NavSlider = props => {
     return (
         <div>
@@ -26,20 +24,8 @@ const NavSlider = props => {
         </div>
     )
 }
-*/}
 
-const NavSlider = props => {
-  return (
-      <div>
-          <Link to={props.path} className='slide'>
-          <span className='element'>{props.element}</span>
-          <span className='name'>{props.name}</span>
-          </Link>
-      </div>
-  )
-}
-
-class Navigation extends React.Component {
+class Limited extends React.Component {
   render() {
     return (
         <header className='masthead'>
@@ -52,8 +38,8 @@ class Navigation extends React.Component {
             <nav>
                 <div className='nav-container'>
                     <NavSlider path="/" element="R" name="Recipes" />
-                    <NavSlider path="/add" element="Ar" name="Add Recipe" />
-                    <NavSlider path="/my" element="M" name="My Recipes" />
+                    <NavSlider path="/login" element="Li" name="Log In" />
+                    <NavSlider path="/signup" element="Su" name="Sign Up" />
                 </div>            
             </nav>
         </header>
@@ -61,7 +47,7 @@ class Navigation extends React.Component {
   }
 }
 
-export default Navigation;
+export default Limited;
 
 {/*
 
