@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class LogIn extends Component {
+class LogIn extends React.Component {
     render() {
         return (
             <div>
