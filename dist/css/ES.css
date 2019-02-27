@@ -324,5 +324,28 @@ body {
     .main {
       padding-left: 150px;
       padding-right: 150px;
-      background-color: rgba(255, 255, 255, 0.5);
+      /*background-color: rgba(255, 255, 255, 0.5);*/
     }
+
+    .Login {
+      padding: 60px 0;
+      border-radius: 25px;
+      color: #bdc3c7;
+    }
+  
+    .Login form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+
+    .Register {
+      padding: 60px 0;
+      color: #bdc3c7;
+
+    }
+
+    .Register form {
+      margin: 0 auto;
+      max-width: 640px;
+    }
+  

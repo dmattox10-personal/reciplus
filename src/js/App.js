@@ -26,7 +26,7 @@ const add = () => (
 )
 
 const home = () => (
-  <div  style={{backgroundColor: 'rgba(255, 255, 255, 0.1)'}}>
+  <div style={{backgroundColor: 'rgba(255, 255, 255, 0.5)'}}>
     <h2> Home </h2>
   </div>
 )
