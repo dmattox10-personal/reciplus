@@ -67,40 +67,16 @@ class Register extends React.Component {
                                     />
                                 </FormGroup> 
                             </Col>
-                        </Row>
-                        <Row>
                             <Col>
-                                <FormGroup controlId="birth_month" size="lg">
-                                    <FormLabel>Birth Month</FormLabel>
+                                <FormGroup controlId="birth_date" size="lg">
+                                    <FormLabel>Birth Date</FormLabel>
                                     <FormControl
                                     autoFocus
-                                    type="text"
-                                    value={this.state.birth_month}
+                                    type="date"
+                                    value={this.state.birth_date}
                                     onChange={this.handleChange}
                                     />
                                 </FormGroup>   
-                            </Col>
-                            <Col>
-                                <FormGroup controlId="birth_day" size="lg">
-                                    <FormLabel>Birth Day</FormLabel>
-                                    <FormControl
-                                    autoFocus
-                                    type="text"
-                                    value={this.state.birth_day}
-                                    onChange={this.handleChange}
-                                    />
-                                </FormGroup> 
-                            </Col>
-                            <Col>
-                                <FormGroup controlId="birth_year" size="lg">
-                                    <FormLabel>Birth Year</FormLabel>
-                                    <FormControl
-                                    autoFocus
-                                    type="text"
-                                    value={this.state.birth_year}
-                                    onChange={this.handleChange}
-                                    />
-                                </FormGroup> 
                             </Col>
                         </Row>
                         <Row>
