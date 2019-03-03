@@ -46,6 +46,7 @@ class LogIn extends React.Component {
                         type="password"
                         />
                     </FormGroup>
+                    <br />   
                     <Button
                         block
                         bssize="large"

@@ -6,10 +6,7 @@ const passport = require('passport');
 const app = express();
 const UserModel = require('./models/user');
 
-//My iMac
-mongoose.connect('mongodb://10.0.0.158/passport-jwt')
-//USING my iMac
-//mongoose.connect('mongodb://127.0.0.1/passport-jwt')
+mongoose.connect('mongodb://127.0.0.1/passport-jwt')
 mongoose.connection.on('error', error => console.log(error) );
 mongoose.Promise = global.Promise;
 
