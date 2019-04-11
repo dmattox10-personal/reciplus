@@ -1,0 +1,9 @@
+.footer {
+    flex-shrink: 0;
+    padding-top: 60px;
+  }
+  a:hover { text-decoration: none !important; }
+  p { color: #2C75FF  !important; }
+  i {
+      float: right;
+  }

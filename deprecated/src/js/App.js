@@ -4,11 +4,17 @@ import { BrowserRouter as Router,
   Route, 
   Link 
 } from 'react-router-dom'
+
+import { Provider } from 'react-redux';
+import store from './store';
+
 import '../css/ES.css'
 import { Container, Row, Col } from 'react-bootstrap'
 
 import LogIn from './components/LogIn'
 import Register from './components/Register'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API = 'http://localhost:3000/api/tests/';
 const DEFAULT_QUERY = 'no';
@@ -133,37 +139,41 @@ class App extends Component {
     if (this.state.logged_in === true) {
       return (
         <Container>
-          <Router>
-            <div>
-              <Navigation />
-                <div className="main">
-                <Route exact path="/" component={home} />
-                <Route path="/my" component={my} />
-                <Route path="/add" component={add} />
-                <p>All the text here</p>
-                </div>
-                
-            </div>
-          </Router>
+          <Provider store = { store }>
+            <Router>
+              <div>
+                <Navigation />
+                  <div className="main">
+                  <Route exact path="/" component={home} />
+                  <Route exact path="/my" component={my} />
+                  <Route exact path="/add" component={add} />
+                  <p>All the text here</p>
+                  </div>
+                  
+              </div>
+            </Router>
+          </Provider>
         </Container>
       )
     }
     else {
       return (
         <Container>
-          <Router>
-            <div>
-              <Limited />
-              <div className="main">
+          <Provider store = { store }>
+            <Router>
+              <div>
+                <Limited />
+                <div className="main">
 
 
 
-              <Route exact path="/" component={home} />
-              <Route path="/login" component={LogIn} />
-              <Route path="/signup" component={Register} /> 
-              </div>
-            </div>       
-          </Router>
+                <Route exact path="/" component={home} />
+                <Route exact path="/login" component={LogIn} />
+                <Route exact path="/signup" component={Register} /> 
+                </div>
+              </div>       
+            </Router>
+          </Provider>
         </Container>
       )
     }    

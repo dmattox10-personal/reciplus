@@ -1,16 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './src/js/index.js',
-    output: {
-        path: __dirname + '/dist',
-        publicPath: '/',
-        filename: 'bundle.js',
-        publicPath: '/'
-    },
-    devServer: {
-        contentBase: './dist'
-    },
     module: {
         rules: [
             {
@@ -30,38 +22,19 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                  "style-loader",
-                  {
-                    loader: "css-loader",
-                    options: {
-                      modules: true
-                    }
-                  }
+                use:  [  
+                    'style-loader', MiniCssExtractPlugin.loader, 'css-loader'
                 ]
-            },
-
-            {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: ["file-loader"]
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: true,
-                        }
-                    }
-                ]
-            }
+              }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./dist/index.html",
+            template: "./src/index.html",
             filename: "./index.html"
-        })
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'index.css',
+          })
     ]
 }
