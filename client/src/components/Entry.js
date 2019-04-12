@@ -48,28 +48,28 @@ class Entry extends Component {
     const {isAuthenticated, user} = this.props.auth
     if (isAuthenticated) {
     return (
-        <div className="container">
-            <hr />
-            <div className="form-group">
-                <form onSubmit={ this.handleSubmit }>
-                <input
-                    placeholder="Catchy Title"
-                    className="form-control"  
-                    name="title"
-                    onChange={ this.handleInputChange }
-                    value={ this.state.title }
-                    /><br />
-                    <textarea className="form-control"
-                     id="entry" 
-                     placeholder={ placeholder }
-                     name="entry"
-                     onChange={ this.handleInputChange }
-                     value={ this.state.entry }
-                    />
-                    <button type="submit" className="btn btn-primary" style={{ marginTop: '20px'}}> Add Entry as { user.name } </button>
-                </form>
+        <div className="container-fluid">
+            <div className="bg">
+                <div className="form-group">
+                    <form onSubmit={ this.handleSubmit }>
+                    <input
+                        placeholder="Catchy Title"
+                        className="form-control"  
+                        name="title"
+                        onChange={ this.handleInputChange }
+                        value={ this.state.title }
+                        /><br />
+                        <textarea className="form-control"
+                        id="entry" 
+                        placeholder={ placeholder }
+                        name="entry"
+                        onChange={ this.handleInputChange }
+                        value={ this.state.entry }
+                        />
+                        <button type="submit" className="btn btn-primary" style={{ marginTop: '20px'}}> Add Entry as { user.name } </button>
+                    </form>
+                </div>
             </div>
-            <hr />
         </div>
     )
     }

@@ -13,6 +13,7 @@ import Login from './components/Login';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
+import Entry from './components/Entry';
 
 if(localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -37,6 +38,7 @@ class App extends Component {
                   <Route exact path="/" component={ Home } />
                   <Route exact path="/register" component={ Register } />
                   <Route exact path="/login" component={ Login } />
+                  <Route exact path="/add" component={ Entry } />
                 </div>
             </div>
           </Router>

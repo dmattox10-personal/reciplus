@@ -59,6 +59,7 @@ class Register extends Component {
         const { errors } = this.state;
         return(
         <div className="container-fluid">
+        <div className="bg">
             <h2>Registration</h2>
             <form onSubmit={ this.handleSubmit }>
                 <div className="form-group">
@@ -119,6 +120,7 @@ class Register extends Component {
                     </button>
                 </div>
             </form>
+        </div>
         </div>
         )
     }

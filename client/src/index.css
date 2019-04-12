@@ -354,4 +354,13 @@ body {
       margin: 0 auto;
       max-width: 640px;
     }
+
+    .bg {
+      background: #333;
+      color: #8c8c8e;
+      padding: 20px;
+      height: 100%;
+      width: 100%;
+      border-radius: 12px;
+    }
   
