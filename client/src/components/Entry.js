@@ -118,20 +118,22 @@ class Entry extends Component {
                                 value={ this.state.instructionText }
                                 /><button className="btn btn-success add" onClick={ this.createInstruction }>Add</button>
                             </div>
-                        <button type="submit" className="btn btn-primary" style={{ marginTop: '20px'}}> Create Recipe as { user.name }</button>
+                            <div className="box">
+                            <h2>Ingredients:</h2>
+                                <ul>
+                                    {ingredients.map((ingredient, i) =>
+                                    <div><Ingredient key={ i } ingredient={ ingredient }></Ingredient></div>)}
+                                </ul>
+                            </div>
+                            <div className="box">
+                            <h2>Instructions:</h2>
+                                <ul>
+                                    {instructions.map((instruction, i) =>
+                                        <div><Instruction key={ i } instruction={ instruction }></Instruction></div>)}
+                                </ul>
+                            </div>
+                        <button type="submit" className="btn btn-primary"> Create Recipe as { user.name }</button>
                     </form>
-                </div>
-                <div className="box">
-                    <ol>
-                        {ingredients.map((ingredient, i) =>
-                        <div><Ingredient key={ i } ingredient={ ingredient }></Ingredient></div>)}
-                    </ol>
-                </div>
-                <div className="box">
-                    <ol>
-                        {instructions.map((instruction, i) =>
-                            <div><Instruction key={ i } instruction={ instruction }></Instruction></div>)}
-                    </ol>
                 </div>
             </div>
         </div>
