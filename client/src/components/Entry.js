@@ -27,6 +27,7 @@ class Entry extends Component {
     }
 
     handleInputChange(e) {
+        e.preventDefault()
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -45,7 +46,7 @@ class Entry extends Component {
     updateIngredientText(e)
     {
         this.setState({
-        ingredientText: e.target.value });
+        ingredientText: e.target.value })
 
     }
 
@@ -99,34 +100,38 @@ class Entry extends Component {
                             onChange={ this.handleInputChange }
                             value={ this.state.title }
                             /><br />
-                            <input className="form-control"
-                            id="ingredient" 
-                            placeholder="Single ingredient, click add"
-                            name="ingredient"
-                            onChange={ this.updateIngredientText }
-                            value={ this.state.ingredient }
-                            /><br />
-                            <input className="form-control"
-                            id="instruction" 
-                            placeholder="Single step, click add"
-                            name="instruction"
-                            onChange={ this.updateInstructionText }
-                            value={ this.state.instruction }
-                            />                        
-                        <button type="submit" className="btn btn-primary" style={{ marginTop: '20px'}}> Add Recipe as { user.name }</button>
+                            <div className="embed-add">
+                                <input className="form-control"
+                                id="ingredient" 
+                                placeholder="Single ingredient, click add"
+                                name="ingredient"
+                                onChange={ this.updateIngredientText }
+                                value={ this.state.ingredientText }
+                                /><button className="btn btn-success add" onClick={ this.createIngredient }>Add</button><br />
+                            </div>            
+                            <div className="embed-add">                
+                                <input className="form-control"
+                                id="instruction" 
+                                placeholder="Single step, click add"
+                                name="instruction"
+                                onChange={ this.updateInstructionText }
+                                value={ this.state.instructionText }
+                                /><button className="btn btn-success add" onClick={ this.createInstruction }>Add</button>
+                            </div>
+                        <button type="submit" className="btn btn-primary" style={{ marginTop: '20px'}}> Create Recipe as { user.name }</button>
                     </form>
                 </div>
                 <div className="box">
-                    <ul>
-                        {ingredients.map((ingredient, id) =>
-                        <div><Ingredient key={ id } ingredient={ ingredient }></Ingredient> <br/ > </div>)}
-                    </ul>
+                    <ol>
+                        {ingredients.map((ingredient, i) =>
+                        <div><Ingredient key={ i } ingredient={ ingredient }></Ingredient></div>)}
+                    </ol>
                 </div>
                 <div className="box">
-                    <ul>
-                        {instructions.map((instruction, id) =>
-                            <div><Instruction key={ id } instruction={ instruction }></Instruction> <br/ > </div>)}
-                    </ul>
+                    <ol>
+                        {instructions.map((instruction, i) =>
+                            <div><Instruction key={ i } instruction={ instruction }></Instruction></div>)}
+                    </ol>
                 </div>
             </div>
         </div>
