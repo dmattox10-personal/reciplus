@@ -16,7 +16,8 @@ class Entry extends Component {
             ingredientText: '',
             instruction: '',
             instructions: [],
-            instructionText: ''
+            instructionText: '',
+            user: ''
         }
         this.updateIngredientText = this.updateIngredientText.bind(this)
         this.createIngredient = this.createIngredient.bind(this)
@@ -38,9 +39,11 @@ class Entry extends Component {
         const recipe = {
             title: this.state.title,
             ingredients: this.state.ingredients,
-            instructions: this.state.instructions
+            instructions: this.state.instructions,
+            user: this.state.user.id
         }
         this.props.enter(recipe);
+        this.props.history.push('/my')
     }
 
     updateIngredientText(e)
