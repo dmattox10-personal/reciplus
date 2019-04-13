@@ -8,11 +8,15 @@ const EntrySchema = new Schema({
         type: String,
         required: true
     },
-    entry: {
-        type: String,
+    ingredients: {
+        type: Array,
         required: true
     },
-    stardate: {
+    instructions: {
+        type: Array,
+        required: true
+    },
+    user: {
         type: String,
         required: true
     },

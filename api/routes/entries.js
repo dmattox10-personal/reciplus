@@ -7,20 +7,16 @@ const Entry = require('../models/entry')
 const async = require('async')
 
 
-router.post('/enter', passport.authenticate('jwt', { session: false }), [
-    body('entry').isLength({ min: 3 }).trim(),
-    body('stardate').isNumeric().trim().escape()
-  ],
+router.post('/enter', passport.authenticate('jwt', { session: false }), 
   (req, res, next)  => {
-    console.log(req.body.entry)
-    console.log(req.body.stardate)
     let id = mongoose.Types.ObjectId()
     let entry = new Entry(
         {
             _id: id,
             title: req.body.title,
-            entry: req.body.entry,
-            stardate: req.body.stardate
+            ingredients: req.body.ingredients,
+            instructions: req.body.instructions,
+            user: req.body.user
         }
     )
     entry.save((err) => {
