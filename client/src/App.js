@@ -33,7 +33,12 @@ class App extends Component {
       <Provider store = { store }>
         <Router>
             <div>
+              <div className="navbar">
               <Navbar />
+              </div>
+              <div className="spacer">
+
+              </div>
                 <div className="main">
                   <Route exact path="/" component={ Home } />
                   <Route exact path="/register" component={ Register } />

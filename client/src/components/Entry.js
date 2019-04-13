@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Moment from 'moment'
 import { enter } from '../actions/enter'
-
-let stardate = getStardate()
-let placeholder = "Captain's Log, Stardate " + stardate
+import Ingredient from './Ingredient'
+import Instruction from './Instruction'
 
 class Entry extends Component {
     
@@ -13,11 +11,19 @@ class Entry extends Component {
         super();
         this.state = {
             title: '',
-            entry: '',
-            stardate: '',
+            ingredient: '',
+            ingredients: [],
+            ingredientText: '',
+            instruction: '',
+            instructions: [],
+            instructionText: ''
         }
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateIngredientText = this.updateIngredientText.bind(this)
+        this.createIngredient = this.createIngredient.bind(this)
+        this.updateInstructionText = this.updateInstructionText.bind(this)
+        this.createInstruction = this.createInstruction.bind(this)
+        this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleInputChange(e) {
@@ -28,12 +34,44 @@ class Entry extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const entry = {
+        const recipe = {
             title: this.state.title,
-            entry: this.state.entry,
-            stardate: stardate,
+            ingredients: this.state.ingredients,
+            instructions: this.state.instructions
         }
-        this.props.enter(entry);
+        this.props.enter(recipe);
+    }
+
+    updateIngredientText(e)
+    {
+        this.setState({
+        ingredientText: e.target.value });
+
+    }
+
+    createIngredient(e)
+    {
+        e.preventDefault();
+        this.setState({
+        ingredients: [...this.state.ingredients, this.state.ingredientText],
+        ingredientText: '' });
+
+    }
+
+    updateInstructionText(e)
+    {
+        this.setState({
+        instructionText: e.target.value });
+
+    }
+
+    createInstruction(e)
+    {
+        e.preventDefault();
+        this.setState({
+        instructions: [...this.state.instructions, this.state.instructionText],
+        instructionText: '' });
+
     }
 
     componentDidMount() {
@@ -45,29 +83,50 @@ class Entry extends Component {
     }
 
   render() {
-    const {isAuthenticated, user} = this.props.auth
+    const { isAuthenticated, user } = this.props.auth
+    const { ingredients, instructions } = this.state
     if (isAuthenticated) {
     return (
         <div className="container-fluid">
             <div className="bg">
+            <h2 style={{marginBottom: '40px'}}>Add Recipe</h2>
                 <div className="form-group">
                     <form onSubmit={ this.handleSubmit }>
-                    <input
-                        placeholder="Catchy Title"
-                        className="form-control"  
-                        name="title"
-                        onChange={ this.handleInputChange }
-                        value={ this.state.title }
-                        /><br />
-                        <textarea className="form-control"
-                        id="entry" 
-                        placeholder={ placeholder }
-                        name="entry"
-                        onChange={ this.handleInputChange }
-                        value={ this.state.entry }
-                        />
-                        <button type="submit" className="btn btn-primary" style={{ marginTop: '20px'}}> Add Entry as { user.name } </button>
+                        <input
+                            placeholder="Catchy Title"
+                            className="form-control"  
+                            name="title"
+                            onChange={ this.handleInputChange }
+                            value={ this.state.title }
+                            /><br />
+                            <input className="form-control"
+                            id="ingredient" 
+                            placeholder="Single ingredient, click add"
+                            name="ingredient"
+                            onChange={ this.updateIngredientText }
+                            value={ this.state.ingredient }
+                            /><br />
+                            <input className="form-control"
+                            id="instruction" 
+                            placeholder="Single step, click add"
+                            name="instruction"
+                            onChange={ this.updateInstructionText }
+                            value={ this.state.instruction }
+                            />                        
+                        <button type="submit" className="btn btn-primary" style={{ marginTop: '20px'}}> Add Recipe as { user.name }</button>
                     </form>
+                </div>
+                <div className="box">
+                    <ul>
+                        {ingredients.map((ingredient, id) =>
+                        <div><Ingredient key={ id } ingredient={ ingredient }></Ingredient> <br/ > </div>)}
+                    </ul>
+                </div>
+                <div className="box">
+                    <ul>
+                        {instructions.map((instruction, id) =>
+                            <div><Instruction key={ id } instruction={ instruction }></Instruction> <br/ > </div>)}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -76,7 +135,7 @@ class Entry extends Component {
     else {
         return (
             <div>
-                <h2>Please Log in to make an entry.</h2>
+                <h2>Please Log in to use this feature.</h2>
             </div>
         )
     }
@@ -88,29 +147,5 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
 })
 
-function daysBetween( date1, date2 ) {
-    //Get 1 day in milliseconds
-    var one_day=1000*60*60*24;
-  
-    // Convert both dates to milliseconds
-    var date1_ms = Moment.utc(date1)
-    var date2_ms = Moment.utc(date2)
-  
-    // Calculate the difference in milliseconds
-    var difference_ms = date2_ms - date1_ms;
-      
-    // Convert back to days and return
-    return Math.round(difference_ms/one_day); 
-  }
-
-function getStardate() {
-    let epoch, today, stardate
-
-    epoch  = new Date(1970, 0, 1)
-    today = new Date()
-    stardate = Math.round(daysBetween(epoch, today)* 39.7766856) /100
-
-    return stardate
-}
 
 export default connect(mapStateToProps,{ enter })(withRouter(Entry))

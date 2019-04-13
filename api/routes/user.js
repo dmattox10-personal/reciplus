@@ -88,26 +88,32 @@ router.post('/login', (req, res) => {
             bcrypt.compare(password, user.password)
                     .then(isMatch => {
                         if(isMatch) {
-                            const payload = {
-                                id: user.id,
-                                name: user.name,
-                                avatar: user.avatar
-                            }
-                            jwt.sign(payload, 'secret', { // use an actual secret here
-                                expiresIn: 3600
-                            }, (err, token) => {
-                                if(err) console.error('There is some error in token', err);
-                                else {
-                                    res.json({
-                                        success: true,
-                                        token: 'JWT ' + token
-                                    });
+                            if(user.Approved) {
+                                const payload = {
+                                    id: user.id,
+                                    name: user.name,
+                                    avatar: user.avatar
                                 }
-                            });
+                                jwt.sign(payload, 'secret', { // use an actual secret here
+                                    expiresIn: 3600
+                                }, (err, token) => {
+                                    if(err) console.error('There is some error in token', err);
+                                    else {
+                                        res.json({
+                                            success: true,
+                                            token: 'JWT ' + token
+                                        });
+                                    }
+                                })
+                            }
+                            else {
+                                errors.password = 'Admin Approval Required'
+                                return res.status(400).json(errors)
+                            }
                         }
                         else {
-                            errors.password = 'Incorrect Password';
-                            return res.status(400).json(errors);
+                            errors.password = 'Incorrect Password'
+                            return res.status(400).json(errors)
                         }
                     });
         });

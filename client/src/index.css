@@ -308,6 +308,7 @@ body {
     
     @media only screen and (min-width: 48.0625em) {
       .masthead {
+        margin-bottom: 40px;
         position: absolute;
         top: 0;
         left: 0;
@@ -322,15 +323,10 @@ body {
     }
   
     .main {
-      padding-left: 154px;
+      padding-left: 144px;
+      padding-top: 80px;
+      padding-right: 166px;
       /*background-color: rgba(255, 255, 255, 0.5);*/
-    }
-
-    @media only screen and (min-width: 48.0625em) {
-      .main {
-        padding-left: 154px;
-        margin-top: 154px;
-      }
     }
 
     .Login {
@@ -357,10 +353,18 @@ body {
 
     .bg {
       background: #333;
-      color: #8c8c8e;
-      padding: 20px;
+      /*color: #8c8c8e;*/
+      color: #fff;
+      padding: 10px;
       height: 100%;
       width: 100%;
-      border-radius: 12px;
     }
   
+    .navbar {
+      padding: 0px;
+      margin: 0px;
+    }
+
+    h2:hover {
+      color: #8cc63f;
+    }

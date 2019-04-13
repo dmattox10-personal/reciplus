@@ -52,7 +52,7 @@ class Login extends Component {
     render() {
         const {errors} = this.state;
         return(
-        <div className="container" style={{ marginTop: '50px'}}>
+        <div className="container bg" style={{ marginTop: '50px'}}>
             <h2 style={{marginBottom: '40px'}}>Login</h2>
             <form onSubmit={ this.handleSubmit }>
                 <div className="form-group">

@@ -21,6 +21,14 @@ const UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    Admin: {
+        type: Boolean,
+        default: false
+    },
+    Approved: {
+        type: Boolean,
+        default: false
     }
 });
 
