@@ -16,6 +16,9 @@ const EntrySchema = new Schema({
         type: Array,
         required: true
     },
+    tags: {
+        type: Array
+    },
     user: {
         type: String,
         required: true

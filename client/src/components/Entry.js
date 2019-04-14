@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { enter } from '../actions/enter'
 import Ingredient from './Ingredient'
 import Instruction from './Instruction'
+import Tag from './Tag'
 
 class Entry extends Component {
     
@@ -17,12 +18,16 @@ class Entry extends Component {
             instruction: '',
             instructions: [],
             instructionText: '',
+            tags: [],
+            tagText: '',
             user: ''
         }
         this.updateIngredientText = this.updateIngredientText.bind(this)
         this.createIngredient = this.createIngredient.bind(this)
         this.updateInstructionText = this.updateInstructionText.bind(this)
         this.createInstruction = this.createInstruction.bind(this)
+        this.updateTagText = this.updateTagText.bind(this)
+        this.createTag = this.createTag.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -40,10 +45,11 @@ class Entry extends Component {
             title: this.state.title,
             ingredients: this.state.ingredients,
             instructions: this.state.instructions,
+            tags: this.state.tags,
             user: this.state.user.id
         }
         this.props.enter(recipe);
-        this.props.history.push('/my')
+        this.props.history.push('/app/my')
     }
 
     updateIngredientText(e)
@@ -71,10 +77,26 @@ class Entry extends Component {
 
     createInstruction(e)
     {
-        e.preventDefault();
+        e.preventDefault()
         this.setState({
         instructions: [...this.state.instructions, this.state.instructionText],
-        instructionText: '' });
+        instructionText: '' })
+
+    }
+
+    updateTagText(e)
+    {
+        this.setState({
+        tagText: e.target.value })
+
+    }
+
+    createTag(e)
+    {
+        e.preventDefault()
+        this.setState({
+        tags: [...this.state.tags, this.state.tagText],
+        tagText: '' })
 
     }
 
@@ -88,7 +110,7 @@ class Entry extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth
-    const { ingredients, instructions } = this.state
+    const { ingredients, instructions, tags } = this.state
     if (isAuthenticated) {
     return (
         <div className="container-fluid">
@@ -119,7 +141,16 @@ class Entry extends Component {
                                 name="instruction"
                                 onChange={ this.updateInstructionText }
                                 value={ this.state.instructionText }
-                                /><button className="btn btn-success add" onClick={ this.createInstruction }>Add</button>
+                                /><button className="btn btn-success add" onClick={ this.createInstruction }>Add</button><br />
+                            </div>
+                            <div className="embed-add">                
+                                <input className="form-control"
+                                id="tag" 
+                                placeholder="Single tag, click add"
+                                name="tag"
+                                onChange={ this.updateTagText }
+                                value={ this.state.tagText }
+                                /><button className="btn btn-success add" onClick={ this.createTag }>Add</button>
                             </div>
                             <div className="box">
                             <h2>Ingredients:</h2>
@@ -135,7 +166,14 @@ class Entry extends Component {
                                         <div><Instruction key={ i } instruction={ instruction }></Instruction></div>)}
                                 </ul>
                             </div>
-                        <button type="submit" className="btn btn-primary"> Create Recipe as { user.name }</button>
+                            <div className="box">
+                            <h2>Tags: </h2><p>e.g. Chinese, Spicy, Gluten Free</p>
+                                <ul>
+                                    {tags.map((tag, i) =>
+                                        <div><Tag key={ i } tag={ tag }></Tag></div>)}
+                                </ul>
+                            </div>
+                        <button type="submit" className="btn btn-success"> Create Recipe as { user.name }</button>
                     </form>
                 </div>
             </div>

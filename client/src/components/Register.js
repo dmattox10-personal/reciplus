@@ -39,7 +39,7 @@ class Register extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.auth.isAuthenticated) {
-            this.props.history.push('/')
+            this.props.history.push('/app/my')
         }
         if(nextProps.errors) {
             this.setState({
@@ -50,7 +50,7 @@ class Register extends Component {
 
     componentDidMount() {
         if(this.props.auth.isAuthenticated) {
-            this.props.history.push('/');
+            this.props.history.push('/app/my');
         }
 
     }
@@ -115,7 +115,7 @@ class Register extends Component {
                     {errors.password_confirm && (<div className="invalid-feedback">{errors.password_confirm}</div>)}
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-success">
                         Register User
                     </button>
                 </div>

@@ -16,6 +16,7 @@ router.post('/enter', passport.authenticate('jwt', { session: false }),
             title: req.body.title,
             ingredients: req.body.ingredients,
             instructions: req.body.instructions,
+            tags: req.body.tags,
             user: req.body.user
         }
     )

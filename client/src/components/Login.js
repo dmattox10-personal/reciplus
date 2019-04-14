@@ -34,13 +34,13 @@ class Login extends Component {
 
     componentDidMount() {
         if(this.props.auth.isAuthenticated) {
-            this.props.history.push('/entry');
+            this.props.history.push('/app/my');
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.auth.isAuthenticated) {
-            this.props.history.push('/entry')
+            this.props.history.push('/app/my')
         }
         if(nextProps.errors) {
             this.setState({
@@ -82,7 +82,7 @@ class Login extends Component {
                     {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-success">
                         Login User
                     </button>
                 </div>

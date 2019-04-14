@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose')
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -8,64 +9,53 @@ const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
 const async = require('async')
 const User = require('../models/User'); // I changed this from "User"
-
+const Entry = require('../models/entry')
 const maxSignups = 2
 router.post('/register', function(req, res) {
 
     const { errors, isValid } = validateRegisterInput(req.body);
-    let numSignups = User.estimatedDocumentCount()
-    numSignups.then( result => {
-        if (result >= maxSignups) {
-            console.log('Maximum number of registrations for this instance reached')
-            errors.main = 'Maximum number of registrations for this instance reached'
-            return res.status(400).json(errors);
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+    User.findOne({
+        email: req.body.email
+    }).then(user => {
+        if(user) {
+            return res.status(400).json({
+                email: 'Email already exists'
+            });
         }
         else {
-            if(!isValid) {
-                return res.status(400).json(errors);
-            }
-            User.findOne({
-                email: req.body.email
-            }).then(user => {
-                if(user) {
-                    return res.status(400).json({
-                        email: 'Email already exists'
-                    });
-                }
+            const avatar = gravatar.url(req.body.email, {
+                s: '200',
+                r: 'pg',
+                d: 'mm'
+            });
+            const newUser = new User({
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                avatar
+            });
+            
+            bcrypt.genSalt(10, (err, salt) => {
+                if(err) console.error('There was an error', err);
                 else {
-                    const avatar = gravatar.url(req.body.email, {
-                        s: '200',
-                        r: 'pg',
-                        d: 'mm'
-                    });
-                    const newUser = new User({
-                        name: req.body.name,
-                        email: req.body.email,
-                        password: req.body.password,
-                        avatar
-                    });
-                    
-                    bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
                         if(err) console.error('There was an error', err);
                         else {
-                            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                                if(err) console.error('There was an error', err);
-                                else {
-                                    newUser.password = hash;
-                                    newUser
-                                        .save()
-                                        .then(user => {
-                                            res.json(user)
-                                        }); 
-                                }
-                            })
+                            newUser.password = hash;
+                            newUser
+                                .save()
+                                .then(user => {
+                                    res.json(user)
+                                }); 
                         }
                     })
                 }
             })
         }
-    })
-    
+    })  
 })
 
 router.post('/login', (req, res) => {
@@ -127,7 +117,7 @@ router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) =
     });
 });
 
-router.get('/settings', (req, res, next) => {
+router.get('/settings', (req, res) => {
     User
         .estimatedDocumentCount()
         .then(count => {
@@ -138,6 +128,36 @@ router.get('/settings', (req, res, next) => {
         })
 })
 
+router.get('/:id/recipes', (req, res) => {
+    async.parallel({
+
+        recipes_list: (callback) => {
+          Entry.find({ user: req.params.id })
+          .sort('-date')
+          .exec(callback)
+        }
+      }, (err, results) => {
+        if (err) { console.log(err) }
+        mongoose.connection.db.listCollections({name: 'entries'})
+        .next(function (err, collinfo) {
+          if (err) { return next(err) }
+          if (collinfo) {
+            let jsonEntries = [results.recipes_list.length]
+            for ( let i = 0; i < results.recipes_list.length; i++ ) {
+              jsonEntries[i] = results.recipes_list[i]._doc
+            }
+            res.json({
+                recipes_list: jsonEntries
+            })
+          }
+          else {
+            res.json({
+                error: "No entries exist"
+            })
+          }
+        })
+    })
+})
 
 module.exports = router;
 

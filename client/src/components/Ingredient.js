@@ -5,10 +5,10 @@ import { withRouter } from 'react-router-dom'
 class Ingredient extends Component {
 
     render() {
-    const { key, ingredient} = this.props
+    const { ingredient} = this.props
     return (
         
-        <li className="ingredient" key={ key }>{ ingredient }</li>
+        <li className="ingredient">{ ingredient }</li>
     )
   }
 }

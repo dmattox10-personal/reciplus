@@ -7,9 +7,11 @@ import setAuthToken from './setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authentication';
 
 import Home from './components/Home'
-import Navbar from './components/Navbar';
-import Register from './components/Register';
-import Login from './components/Login';
+import Navbar from './components/Navbar'
+import Register from './components/Register'
+import Login from './components/Login'
+import Mine from './components/Mine'
+import Recipe from './components/Recipe'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
@@ -40,10 +42,12 @@ class App extends Component {
 
               </div>
                 <div className="main">
-                  <Route exact path="/" component={ Home } />
-                  <Route exact path="/register" component={ Register } />
-                  <Route exact path="/login" component={ Login } />
-                  <Route exact path="/add" component={ Entry } />
+                  <Route exact path="/app/recipes" component={ Home } />
+                  <Route exact path="/app/register" component={ Register } />
+                  <Route exact path="/app/login" component={ Login } />
+                  <Route exact path="/app/add" component={ Entry } />
+                  <Route exact path="/app/my" component={ Mine } />
+                  <Route path="/app/recipes/:recipe" component={ Recipe } />
                 </div>
             </div>
           </Router>

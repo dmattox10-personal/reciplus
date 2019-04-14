@@ -6,7 +6,7 @@ export default class Home extends Component {
         return (
             <div>
                 <div className="container-fluid">
-                <h1>&nbsp;</h1>
+                <h1>All recipes, sortable, will reside here.</h1>
                 </div>
             </div>
         );

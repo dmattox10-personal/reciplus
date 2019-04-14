@@ -1,45 +1,17 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom';
-import axios from 'axios'
+import { withRouter, Link } from 'react-router-dom'
 
 class List extends Component {
-    
-    constructor() {
-        super();
-        this.state = {
-            entries: [],
-        }
-    }
-
-    componentDidMount() {
-        axios.get('/api/entries/list')
-      .then(res => 
-        res.data.entries_list.map(entry => ({
-            entry: `${entry.entry}`,
-            stardate: `${entry.stardate}`,
-            date: `${entry.date}`
-        }))
-      )
-      .then( entries => {
-          this.setState({
-              entries
-          })
-      })
-    }
 
   render() {
-    const { entries } = this.state;
+    const { title, date, id } = this.props;
+    const url = '/app/recipes/' + id
     return (
         <div className="container">
-            <hr />
             <div className="entries-list">
-                <ul>
-                    {entries.map(entry =>
-                        <li key={entry.date}>Captains' Log, Stardate {entry.stardate} :<br />{entry.entry}</li>
-                    )}
-                </ul>
+                <h3 key={ date }><Link to={ url }>{ title }</Link><br /></h3>
+                <hr />
             </div>
-            <hr />
         </div>
     )
   }
