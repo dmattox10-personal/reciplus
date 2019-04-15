@@ -4,6 +4,7 @@ const passport = require('passport')
 const { body } = require('express-validator/check')
 const mongoose = require('mongoose')
 const Entry = require('../models/entry')
+const User = require('../models/User')
 const async = require('async')
 
 
@@ -56,6 +57,29 @@ router.get('/list', (req, res, next) => {
           }
         })
     })
+})
+
+router.get('/:id', (req, res) => { 
+  async.parallel({
+      recipe: (callback) => {
+        Entry.find({ _id: req.params.id })
+        .exec(callback)
+      }
+    }, (err, results) => {
+      if (err) { console.log(err) }
+      async.parallel({
+        name: (callback) => {
+          User.findOne({ _id: results.recipe[0]._doc.user })
+          .exec(callback)
+        }
+      }, (err, output) => {
+        if (err) { console.log(err) }
+        results.recipe[0]._doc.username = output.name._doc.name
+        res.json({
+          recipe: results.recipe[0]._doc
+        })
+    })
+  })
 })
 
 

@@ -47,7 +47,10 @@ class App extends Component {
                   <Route exact path="/app/login" component={ Login } />
                   <Route exact path="/app/add" component={ Entry } />
                   <Route exact path="/app/my" component={ Mine } />
-                  <Route path="/app/recipes/:recipe" component={ Recipe } />
+                  {/*<Route path="/app/recipes/:recipe" component={ Recipe } />*/}
+                  <Route path='/app/recipes/:recipe'
+                      render={(props) => <Recipe {...props} />}
+/>
                 </div>
             </div>
           </Router>
