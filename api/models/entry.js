@@ -8,6 +8,10 @@ const EntrySchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     ingredients: {
         type: Array,
         required: true
@@ -22,6 +26,9 @@ const EntrySchema = new Schema({
     user: {
         type: String,
         required: true
+    },
+    photo: {
+        type: String
     },
     date: {
         type: Date,

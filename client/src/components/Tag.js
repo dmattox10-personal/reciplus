@@ -5,10 +5,10 @@ import { withRouter } from 'react-router-dom'
 class Tag extends Component {
 
     render() {
-    const { tag } = this.props
+    const { tag, key } = this.props
     return (
         
-        <li className="tag">{ tag }</li>
+        <li className="tag" key={ (key + 90) + "b" }>{ tag }</li>
     )
   }
 }

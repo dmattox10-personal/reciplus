@@ -5,10 +5,10 @@ import { withRouter } from 'react-router-dom'
 class Instruction extends Component {
 
     render() {
-    const { instruction} = this.props
+    const { instruction, key } = this.props
     return (
         
-        <li className="instruction">{ instruction }</li>
+        <li className="instruction" key={ (key + 10) + "a" }>{ instruction }</li>
     )
   }
 }

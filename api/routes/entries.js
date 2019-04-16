@@ -6,21 +6,47 @@ const mongoose = require('mongoose')
 const Entry = require('../models/entry')
 const User = require('../models/User')
 const async = require('async')
+const Jimp = require('jimp')
+const multer = require('multer')
+const upload = multer({ dest: './public/img/' })
+const mv = require('mv')
 
 
-router.post('/enter', passport.authenticate('jwt', { session: false }), 
+
+router.post('/enter', passport.authenticate('jwt', { session: false }), upload.single('file'),
   (req, res, next)  => {
+    console.log(req.body.title)
+    console.log(req.file)
     let id = mongoose.Types.ObjectId()
+    let mimetype = ''
+    let fileName = ''
+    if (req.file) {
+      mimetype = req.file.originalname.slice(-4, req.file.originalname.length)
+      fileName = id + mimetype
+      mv('./public/img/' + req.file.filename, './public/img/' + fileName, (err) => {
+          if (err) { console.log(err) }
+          })
+  }
     let entry = new Entry(
         {
             _id: id,
             title: req.body.title,
+            description: req.body.description,
             ingredients: req.body.ingredients,
             instructions: req.body.instructions,
             tags: req.body.tags,
             user: req.body.user
         }
     )
+    if (req.file) {
+        var path = './public/img/' + fileName
+        Jimp.read(path).then(function (image) {
+          image.resize(512, Jimp.AUTO)            // resize
+          .write(path)
+        }).catch(function (err) {
+          console.error(err)
+        })
+    }
     entry.save((err) => {
         if (err) { return next(err) }
         res.redirect('/')

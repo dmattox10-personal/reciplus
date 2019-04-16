@@ -12,6 +12,7 @@ class Recipe extends Component {
             id: '',
             recipe: {
                 title: '',
+                description: '',
                 ingredients: [],
                 instructions: [],
                 tags: [],
@@ -36,9 +37,17 @@ class Recipe extends Component {
             let ingredients = Array.from(res.data.recipe.ingredients)
             let instructions = Array.from(res.data.recipe.instructions)
             let tags = Array.from(res.data.recipe.tags)
+            let descText
+            if (res.data.recipe.description === undefined) {
+                descText = "No Description"
+            }
+            else {
+                descText = res.data.recipe.description
+            }
             this.setState({
                 recipe: {
                     title: `${res.data.recipe.title}`,
+                    description: descText,
                     ingredients: ingredients,
                     instructions: instructions,
                     tags: tags,
@@ -57,25 +66,26 @@ class Recipe extends Component {
         <div className="container">
             <div className="bg">
             <h2>"{ recipe.title }" By { recipe.name }</h2>
+            <p>{ recipe.description }</p>
             <div className="box">
                 <h2>Ingredients:</h2>
                     <ul>
                         {recipe.ingredients.map((ingredient, i) =>
-                        <div><Ingredient key={ i } ingredient={ ingredient }></Ingredient></div>)}
+                        <div><Ingredient key={ i + 50 } ingredient={ ingredient }></Ingredient></div>)}
                     </ul>
                 </div>
                 <div className="box">
                 <h2>Instructions:</h2>
                     <ul>
                         {recipe.instructions.map((instruction, i) =>
-                            <div><Instruction key={ i } instruction={ instruction }></Instruction></div>)}
+                            <div><Instruction key={ i + 10 } instruction={ instruction }></Instruction></div>)}
                     </ul>
                 </div>
                 <div className="box">
                 <h2>Tags: </h2><p>e.g. Chinese, Spicy, Gluten Free</p>
                     <ul>
                         {recipe.tags.map((tag, i) =>
-                            <div><Tag key={ i } tag={ tag }></Tag></div>)}
+                            <div><Tag key={ i + 90 } tag={ tag }></Tag></div>)}
                     </ul>
                 </div>
             </div>

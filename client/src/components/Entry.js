@@ -20,7 +20,9 @@ class Entry extends Component {
             instructionText: '',
             tags: [],
             tagText: '',
-            user: ''
+            user: '',
+            description: '',
+            file: null
         }
         this.updateIngredientText = this.updateIngredientText.bind(this)
         this.createIngredient = this.createIngredient.bind(this)
@@ -29,6 +31,7 @@ class Entry extends Component {
         this.updateTagText = this.updateTagText.bind(this)
         this.createTag = this.createTag.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
+        this.fileChangedHandler = this.fileChangedHandler.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -46,9 +49,18 @@ class Entry extends Component {
             ingredients: this.state.ingredients,
             instructions: this.state.instructions,
             tags: this.state.tags,
-            user: this.state.user.id
+            user: this.state.user.id,
+            description: this.state.description,
         }
-        this.props.enter(recipe);
+        const recipeForm = new FormData()
+        recipeForm.append('title', recipe.title)
+        recipeForm.append('ingredients', recipe.ingredients)
+        recipeForm.append('instructions', recipe.instructions)
+        recipeForm.append('tags', recipe.tags)
+        recipeForm.append('user', recipe.user)
+        recipeForm.append('description', recipe.description)
+        recipeForm.append('file', this.state.file)
+        this.props.enter(recipeForm);
         this.props.history.push('/app/my')
     }
 
@@ -100,6 +112,13 @@ class Entry extends Component {
 
     }
 
+    fileChangedHandler = event => {
+        this.setState({ 
+            file: event.target.files[0]
+        })
+    
+    }      
+
     componentDidMount() {
         if(this.props.auth.isAuthenticated) {
             this.setState({
@@ -119,16 +138,23 @@ class Entry extends Component {
                 <div className="form-group">
                     <form onSubmit={ this.handleSubmit }>
                         <input
-                            placeholder="Catchy Title"
+                            placeholder="Catchy Title (Required)"
                             className="form-control"  
                             name="title"
                             onChange={ this.handleInputChange }
                             value={ this.state.title }
                             /><br />
+                        <textarea
+                            placeholder="Short description of the dish or recipe (Required)"
+                            className="form-control"
+                            name="description"
+                            onChange={ this.handleInputChange }
+                            value={ this.state.description }
+                            /><br />
                             <div className="embed-add">
                                 <input className="form-control"
                                 id="ingredient" 
-                                placeholder="Single ingredient, click add"
+                                placeholder="Single ingredient, click add (Required)"
                                 name="ingredient"
                                 onChange={ this.updateIngredientText }
                                 value={ this.state.ingredientText }
@@ -137,7 +163,7 @@ class Entry extends Component {
                             <div className="embed-add">                
                                 <input className="form-control"
                                 id="instruction" 
-                                placeholder="Single step, click add"
+                                placeholder="Single step, click add (Required)"
                                 name="instruction"
                                 onChange={ this.updateInstructionText }
                                 value={ this.state.instructionText }
@@ -156,23 +182,24 @@ class Entry extends Component {
                             <h2>Ingredients:</h2>
                                 <ul>
                                     {ingredients.map((ingredient, i) =>
-                                    <div><Ingredient key={ i } ingredient={ ingredient }></Ingredient></div>)}
+                                    <div><Ingredient key={ i + 50 } ingredient={ ingredient }></Ingredient></div>)}
                                 </ul>
                             </div>
                             <div className="box">
                             <h2>Instructions:</h2>
                                 <ul>
                                     {instructions.map((instruction, i) =>
-                                        <div><Instruction key={ i } instruction={ instruction }></Instruction></div>)}
+                                        <div><Instruction key={ i + 10 } instruction={ instruction }></Instruction></div>)}
                                 </ul>
                             </div>
                             <div className="box">
                             <h2>Tags: </h2><p>e.g. Chinese, Spicy, Gluten Free</p>
                                 <ul>
                                     {tags.map((tag, i) =>
-                                        <div><Tag key={ i } tag={ tag }></Tag></div>)}
+                                        <div><Tag key={ i + 90 } tag={ tag }></Tag></div>)}
                                 </ul>
                             </div>
+                            <input type="file" name="file" onChange={this.fileChangedHandler}/>
                         <button type="submit" className="btn btn-success"> Create Recipe as { user.name }</button>
                     </form>
                 </div>
