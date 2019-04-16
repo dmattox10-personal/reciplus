@@ -16,7 +16,7 @@ import Recipe from './components/Recipe'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 import Entry from './components/Entry';
-{/* 
+
 if(localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
@@ -28,7 +28,7 @@ if(localStorage.jwtToken) {
     window.location.href = '/login'
   }
 }
-*/}
+
 class App extends Component {
   render() {
     return (
