@@ -1,0 +1,3 @@
+https://medium.appbase.io/how-to-build-a-movie-search-app-with-react-and-elasticsearch-2470f202291c
+https://alligator.io/react/react-autocomplete/
+https://appdividend.com/2018/08/23/react-autocomplete-example-tutorial/
