@@ -19,7 +19,8 @@ class Recipe extends Component {
                 date: '',
                 id: '',
                 name: '',
-            }
+            },
+            img: ''
         }
     }
 
@@ -31,9 +32,9 @@ class Recipe extends Component {
 
     componentDidMount() {
         let url = '/api/entries/' + this.state.id
+        let imgurl = "/api/entries/img/" + this.state.id
         axios.get(url)
         .then(res => {
-            console.log(res)
             let ingredients = Array.from(res.data.recipe.ingredients)
             let instructions = Array.from(res.data.recipe.instructions)
             let tags = Array.from(res.data.recipe.tags)
@@ -58,10 +59,17 @@ class Recipe extends Component {
                 })
             }
         )
+        axios.get(imgurl)
+        .then(res => {
+            this.setState({
+                img: res.data
+            })
+        })
     }
     
   render() {
-      const { recipe } = this.state
+      const { recipe, img } = this.state
+      const image = "data:image/png;base64," + img
     return (
         <div className="container">
             <div className="bg">
@@ -88,6 +96,7 @@ class Recipe extends Component {
                             <div><Tag key={ i + 90 } tag={ tag }></Tag></div>)}
                     </ul>
                 </div>
+                <img src={ image } alt="Nothing to see here."></img>
             </div>
         </div>
     )

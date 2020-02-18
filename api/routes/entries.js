@@ -10,6 +10,8 @@ const Jimp = require('jimp')
 const multer = require('multer')
 const upload = multer({ dest: './public/img/' })
 const mv = require('mv')
+const path = require('path')
+const fs = require('fs')
 
 
 
@@ -26,7 +28,14 @@ router.post('/enter', passport.authenticate('jwt', { session: false }), upload.s
       mv('./public/img/' + req.file.filename, './public/img/' + fileName, (err) => {
           if (err) { console.log(err) }
           })
-  }
+    let path = './public/img/' + fileName
+    Jimp.read(path).then(function (image) {
+      image.resize(Jimp.AUTO, 512)            // resize
+      .write(path)
+    }).catch(function (err) {
+      console.error(err)
+    })
+    }
     let entry = new Entry(
         {
             _id: id,
@@ -41,7 +50,7 @@ router.post('/enter', passport.authenticate('jwt', { session: false }), upload.s
     if (req.file) {
         var path = './public/img/' + fileName
         Jimp.read(path).then(function (image) {
-          image.resize(512, Jimp.AUTO)            // resize
+          image.resize(Jimp.AUTO, 512)            // resize
           .write(path)
         }).catch(function (err) {
           console.error(err)
@@ -106,6 +115,33 @@ router.get('/:id', (req, res) => {
         })
     })
   })
+})
+
+router.get('/img/:id', (req, res) => {
+  const path = './public/img/'
+  const mime = '.jpg'
+  const mime2 = '.png'
+  try {
+    if (fs.existsSync(path + req.params.id + mime)) {
+      let buff = fs.readFileSync(path + req.params.id + mime);  
+      let base64data = buff.toString('base64');
+      res.json(base64data)
+    }
+  } catch(err) {
+    console.error(err)
+    try {
+      if (fs.existsSync(path + req.params.id + mime2)) {
+        let buff = fs.readFileSync(path + req.params.id + mime2);  
+        let base64data = buff.toString('base64');
+        res.json(base64data)
+      }
+    } catch(err) {
+      console.error(err)
+      res.send(404)
+    }
+  }
+  
+  
 })
 
 
