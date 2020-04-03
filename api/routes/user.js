@@ -152,7 +152,7 @@ router.get('/:id/recipes', (req, res) => {
           }
           else {
             res.json({
-                error: "No entries exist"
+                recipes_list: []
             })
           }
         })

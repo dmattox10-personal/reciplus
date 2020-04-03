@@ -1,54 +1,32 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios'
 import List from './List'
 
-class Mine extends Component {
+const Mine = props => {
     
-    constructor() {
-        super();
-        this.state = {
-            recipes: [],
-            user: ''
-        }
-    }
-
-    componentDidMount() {
-        if(this.props.auth.isAuthenticated) {
-            this.setState({
-                user: this.props.auth.user
+    const [recipes, updateRecipes] = useState([])
+    //const [user, updateUser] = useState({}) // Is this the real life?
+    
+    useEffect(() => {
+        if (props.auth.isAuthenticated) {
+            //updateUser(props.auth.user) // Is this just fantasy?
+            axios.get(`/api/users/${props.auth.user.id}/recipes`)
+            .then(res => {
+                updateRecipes(res.data.recipes_list)
+                console.log(res.data.recipes_list)
             })
         }
-        console.log(this.state.user.id)
-        let url = '/api/users/' + this.props.auth.user.id + '/recipes'
-        axios.get(url)
-        .then(res => 
-            res.data.recipes_list.map(recipe => ({
-                title: `${recipe.title}`,
-                description:  `${recipe.description}`,
-                ingredients: `${recipe.entry}`,
-                instructions: `${recipe.instructions}`,
-                tags: `${recipe.tags}`,
-                date: `${recipe.date}`,
-                id: `${recipe._id}`
-                }))
-          )
-          .then( recipes => {
-              this.setState({
-                  recipes
-              })
-          })
-    }
+    }, [])
 
-    render() {
-    const { recipes } = this.state;
     const noDesc = 'No Description.'
-    if (this.props.auth.isAuthenticated) {
+    if (props.auth.isAuthenticated) {
         return (
             <div className="container-fluid">
                 <div className="bg">
                     <hr />
+                    {/*FIXME don't check for undefined, set it to something default on the backend! */}
                     {recipes.map((recipe, index) =><div> <List key={ index * 3} title={ recipe.title } date={ recipe.date } id={ recipe.id } description={ typeof recipe.description !== "undefined" ? recipe.description : noDesc }></List></div>)}
                 </div>
             </div>
@@ -64,7 +42,6 @@ class Mine extends Component {
         )
     }
   }
-}
 
 const mapStateToProps = (state) => ({
     auth: state.auth,

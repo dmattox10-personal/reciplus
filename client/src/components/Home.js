@@ -1,50 +1,28 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios'
 import List from './List'
 
-class Home extends Component {
-    
-    constructor() {
-        super();
-        this.state = {
-            recipes: [],
-            user: ''
-        }
-    }
+const Home = props => {
 
-    componentDidMount() {
-        if(this.props.auth.isAuthenticated) {
-            this.setState({
-                user: this.props.auth.user
-            })
-        }
-        console.log(this.state.user.id)
-        let url = '/api/entries/list'
-        axios.get(url)
-        .then(res => 
-            res.data.entries_list.map(recipe => ({
-                title: `${recipe.title}`,
-                description:  `${recipe.description}`,
-                ingredients: `${recipe.entry}`,
-                instructions: `${recipe.instructions}`,
-                tags: `${recipe.tags}`,
-                date: `${recipe.date}`,
-                id: `${recipe._id}`
-                }))
-          )
-          .then( recipes => {
-              this.setState({
-                  recipes
-              })
-          })
-    }
+    //const [user, updateUser] = useState({}) // Are we sure this is an object?
+    const [recipes, updateRecipes] = useState([])
 
-    render() {
-    const { recipes } = this.state;
+    useEffect(() => {
+        /*
+        if(props.auth.isAuthenticated) {
+            updateUser(props.auth.user) 
+        }
+        */
+        axios.get('/api/entries/list')
+        .then(res => {
+            updateRecipes(res.data.entries_list)            
+        })
+    }, [])
+
     const noDesc = 'No Description.'
-    if (this.props.auth.isAuthenticated) {
+    if (props.auth.isAuthenticated) {
         return (
             <div className="container-fluid">
                 <div className="bg">
@@ -63,7 +41,6 @@ class Home extends Component {
             </div>
         )
     }
-  }
 }
 
 const mapStateToProps = (state) => ({
