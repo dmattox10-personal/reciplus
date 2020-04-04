@@ -1,57 +1,37 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { enter } from '../actions/enter'
 import Ingredient from './Ingredient'
 import Instruction from './Instruction'
 import Tag from './Tag'
-
-class Entry extends Component {
+// TODO FINISH CONVERTING THIS FILE TO FUNCTIONAL COMPONENT
+const Entry = props => {
     
-    constructor() {
-        super();
-        this.state = {
-            title: '',
-            ingredient: '',
-            ingredients: [],
-            ingredientText: '',
-            instruction: '',
-            instructions: [],
-            instructionText: '',
-            tags: [],
-            tagText: '',
-            user: '',
-            description: '',
-            file: null
-        }
-        this.updateIngredientText = this.updateIngredientText.bind(this)
-        this.createIngredient = this.createIngredient.bind(this)
-        this.updateInstructionText = this.updateInstructionText.bind(this)
-        this.createInstruction = this.createInstruction.bind(this)
-        this.updateTagText = this.updateTagText.bind(this)
-        this.createTag = this.createTag.bind(this)
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.fileChangedHandler = this.fileChangedHandler.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
+    const [recipe, updateRecipe] = useState({
+        title: '',
+        ingredient: '',
+        ingredients: [],
+        ingredientText: '',
+        instruction: '',
+        instructions: [],
+        instructionText: '',
+        tags: [],
+        tagText: '',
+        user: '',
+        description: '',
+        file: null
+    })
 
-    handleInputChange(e) {
+    const handleInputChange = e => {
         e.preventDefault()
-        this.setState({
+        updateRecipe({
             [e.target.name]: e.target.value
         })
     }
 
-    handleSubmit(e) {
+    const handleSubmit = e => {
         e.preventDefault();
-        const recipe = {
-            title: this.state.title,
-            ingredients: this.state.ingredients,
-            instructions: this.state.instructions,
-            tags: this.state.tags,
-            user: this.state.user.id,
-            description: this.state.description,
-        }
         const recipeForm = new FormData()
         recipeForm.append('title', recipe.title)
         recipeForm.append('ingredients', recipe.ingredients)
@@ -59,9 +39,9 @@ class Entry extends Component {
         recipeForm.append('tags', recipe.tags)
         recipeForm.append('user', recipe.user)
         recipeForm.append('description', recipe.description)
-        recipeForm.append('file', this.state.file)
-        this.props.enter(recipeForm);
-        this.props.history.push('/app/my')
+        recipeForm.append('file', recipe.file)
+        props.enter(recipeForm);
+        props.history.push('/app/my')
     }
 
     updateIngredientText(e)
@@ -127,7 +107,7 @@ class Entry extends Component {
         }
     }
 
-  render() {
+  
     const { isAuthenticated, user } = this.props.auth
     const { ingredients, instructions, tags } = this.state
     if (isAuthenticated) {
@@ -214,7 +194,6 @@ class Entry extends Component {
             </div>
         )
     }
-  }
 }
 
 const mapStateToProps = (state) => ({
